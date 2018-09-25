@@ -42,9 +42,9 @@ namespace WpfAppTest.ViewModel
                 switch (columnName)
                 {
                     case "Age":
-                        if ((Age < 0) || (Age > 100))
+                        if ((Age < 0) || (Age > 120))
                         {
-                            error = "Возраст должен быть больше 0 и меньше 100";
+                            error = "Возраст должен быть быть реальным";
                         }
                         break;
                     case "Name":
@@ -56,7 +56,7 @@ namespace WpfAppTest.ViewModel
                     case "Country":
                         if (Country == -1)
                         {
-                            error = "Не пустой";
+                            error = "Выберите страну";
                         }
                         break;
                 }
