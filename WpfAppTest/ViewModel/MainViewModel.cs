@@ -7,6 +7,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Runtime.Serialization.Json;
+using System.Runtime.Serialization;
+
 using WpfAppTest.Model;
 
 namespace WpfAppTest.ViewModel
@@ -15,13 +18,15 @@ namespace WpfAppTest.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
         User _userObj;
-        public ObservableCollection<string> _country { get; private set; }
+        private ObservableCollection<string> _country;
 
         public MainViewModel(User q1)
         {
             this._userObj = q1;
-            _country = new ObservableCollection<string>() { "Россия", "Германия", "Италия" };
+            CountryName = new ObservableCollection<string>() { "Россия", "Германия", "Италия" };
         }
+
+        public ObservableCollection<string> CountryName { get => _country; set => _country = value; }
 
         private void OnPropertyChanged([CallerMemberName]string propertyName = "")
         {
@@ -33,7 +38,7 @@ namespace WpfAppTest.ViewModel
         {
             get
             {
-                string error = String.Empty;
+                string error = default;
                 switch (columnName)
                 {
                     case "Age":
@@ -45,12 +50,11 @@ namespace WpfAppTest.ViewModel
                     case "Name":
                         if (String.IsNullOrEmpty(Name))
                         {
-                            error = "Не пустой";
+                            error = "Имя не может быть пустым";
                         }
-                        //Обработка ошибок для свойства Name
                         break;
-                    case "Сountry":
-                        if (CountrySet != -1)
+                    case "Country":
+                        if (Country == -1)
                         {
                             error = "Не пустой";
                         }
@@ -88,11 +92,11 @@ namespace WpfAppTest.ViewModel
 
         }
 
-        public int CountrySet
+        public int Country
         {
             get
             {
-                return Properties.Settings.Default._country = -1; //костыль
+                return Properties.Settings.Default._country; //костыль
             }
             set
             {
@@ -102,31 +106,6 @@ namespace WpfAppTest.ViewModel
             }
         }
 
-        public string FormatTmp
-        {
-            get => Properties.Settings.Default._format;
-            set
-            {
-                Properties.Settings.Default._format = value;
-                MessageBox.Show(Properties.Settings.Default._format);
-
-                switch (value)
-                {
-                    case "JSON":
-
-                        //Обработка ошибок для свойства 
-                        break;
-                    case "XML":
-
-                        //Обработка ошибок для свойства 
-                        break;
-                    default:
-                        break;
-                }
-
-                OnPropertyChanged();
-            }
-
-        }
+        public bool asdad { get; set; } = false;
     }
 }

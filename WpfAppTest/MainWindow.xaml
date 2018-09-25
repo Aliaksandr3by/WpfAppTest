@@ -5,49 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfAppTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="214.513" Width="332.839">
+        Title="MainWindow" Height="170.513" Width="222.839">
+    
+    <Window.Resources>
+        <ControlTemplate x:Key="validationFailed">
+            <StackPanel Orientation="Horizontal">
+                <Border BorderBrush="Violet" BorderThickness="2">
+                    <AdornedElementPlaceholder />
+                </Border>
+                <TextBlock Foreground="Red" FontWeight="Bold">!</TextBlock>
+            </StackPanel>
+        </ControlTemplate>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock Width="50">Имя</TextBlock>
-            <TextBox Name="NameTextBox" MinWidth="150">
+            <TextBox Name="NameTextBox" MinWidth="150" Validation.Error="TextBox_Error" Validation.ErrorTemplate="{StaticResource validationFailed}">
                 <TextBox.Text>
-                    <Binding Path="Name">
-                        <Binding.ValidationRules>
-                            <DataErrorValidationRule />
-                        </Binding.ValidationRules>
-                    </Binding>
+                    <Binding Path="Name" ValidatesOnDataErrors="True" NotifyOnValidationError="True"/>
                 </TextBox.Text>
             </TextBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock Width="50">Возраст</TextBlock>
-            <TextBox Name="AgeTextBox" MinWidth="150">
+            <TextBox Name="AgeTextBox" MinWidth="150" Validation.Error="TextBox_Error" Validation.ErrorTemplate="{StaticResource validationFailed}">
                 <TextBox.Text>
-                    <Binding Path="Age">
-                        <Binding.ValidationRules>
-                            <DataErrorValidationRule />
-                        </Binding.ValidationRules>
-                    </Binding>
+                    <Binding Path="Age" ValidatesOnDataErrors="True" NotifyOnValidationError="True"/>
                 </TextBox.Text>
             </TextBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock Width="50">Страна</TextBlock>
-            <ComboBox Name="CountryComboBox" MinWidth="150" ItemsSource="{Binding Country}" SelectedIndex="{Binding CountrySet}"/>
+            <ComboBox Name="CountryComboBox" MinWidth="150" ItemsSource="{Binding CountryName}" Validation.Error="TextBox_Error" Validation.ErrorTemplate="{StaticResource validationFailed}">
+                <ComboBox.SelectedIndex>
+                    <Binding Path="Country" ValidatesOnDataErrors="True" NotifyOnValidationError="True"/>
+                </ComboBox.SelectedIndex>
+            </ComboBox>
         </StackPanel>
-        <GroupBox MinWidth="150">
+        <GroupBox x:Name="FormatGroupBox" MinWidth="150">
             <GroupBox.Header>
                 <TextBlock TextWrapping="Wrap">Формат</TextBlock>
             </GroupBox.Header>
-            <StackPanel Orientation="Horizontal">
-                <RadioButton Name="JSON_RadioButton" IsChecked="True" GroupName="FormatRadioButton">
-                    <TextBlock TextWrapping="Wrap" Text="JSON*   "></TextBlock>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <RadioButton Name="Format_JSON_RadioButton" IsChecked="True" GroupName="FormatRadioButton" Checked="Format_RadioButton_Checked">
+                    <TextBlock TextWrapping="Wrap" Text="JSON *   "></TextBlock>
                 </RadioButton>
-                <RadioButton Name="XML_RadioButton" IsChecked="False" GroupName="FormatRadioButton">
-                    <TextBlock TextWrapping="Wrap">XML *</TextBlock>
+                <RadioButton Name="Format_XML_RadioButton" IsChecked="False" GroupName="FormatRadioButton" Checked="Format_RadioButton_Checked">
+                    <TextBlock TextWrapping="Wrap" Text="XML *   "/>
                 </RadioButton>
                 <StackPanel>
-                    <Button x:Name="SaveButton" Click="SaveButton_Click">Сохранить</Button>
+                    <Button x:Name="SaveButton" Click="SaveButton_Click" >Сохранить</Button>
                 </StackPanel>
             </StackPanel>
         </GroupBox>

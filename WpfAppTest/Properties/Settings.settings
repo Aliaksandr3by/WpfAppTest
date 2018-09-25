@@ -8,9 +8,6 @@
     <Setting Name="_age" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="_format" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="_country" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">-1</Value>
     </Setting>
