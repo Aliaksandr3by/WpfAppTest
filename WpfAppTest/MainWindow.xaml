@@ -5,8 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfAppTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="214.513" Width="332.839">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Width="50">Имя</TextBlock>
+            <TextBox Name="NameTextBox" MinWidth="150">
+                <TextBox.Text>
+                    <Binding Path="Name">
+                        <Binding.ValidationRules>
+                            <DataErrorValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Width="50">Возраст</TextBlock>
+            <TextBox Name="AgeTextBox" MinWidth="150">
+                <TextBox.Text>
+                    <Binding Path="Age">
+                        <Binding.ValidationRules>
+                            <DataErrorValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Width="50">Страна</TextBlock>
+            <ComboBox Name="CountryComboBox" MinWidth="150" ItemsSource="{Binding Country}" SelectedIndex="{Binding CountrySet}"/>
+        </StackPanel>
+        <GroupBox MinWidth="150">
+            <GroupBox.Header>
+                <TextBlock TextWrapping="Wrap">Формат</TextBlock>
+            </GroupBox.Header>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Name="JSON_RadioButton" IsChecked="True" GroupName="FormatRadioButton">
+                    <TextBlock TextWrapping="Wrap" Text="JSON*   "></TextBlock>
+                </RadioButton>
+                <RadioButton Name="XML_RadioButton" IsChecked="False" GroupName="FormatRadioButton">
+                    <TextBlock TextWrapping="Wrap">XML *</TextBlock>
+                </RadioButton>
+                <StackPanel>
+                    <Button x:Name="SaveButton" Click="SaveButton_Click">Сохранить</Button>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Width="50">Поиск</TextBlock>
+            <TextBox Name="Find" Text="{Binding FindTmp}"  MinWidth="150"></TextBox>
+        </StackPanel>
+    </StackPanel>
 </Window>
